@@ -53,14 +53,60 @@ Step 7: Save Your Work
 
 
 ## Code:
+```c
+const int trigPin = 7;
+const int echoPin = 6;
+const int ledPin = 13;
 
+long duration;
+float distance;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Send ultrasonic pulse
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Read echo
+  duration = pulseIn(echoPin, HIGH);
+
+  // Calculate distance in cm
+  distance = duration * 0.0343 / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  // Turn LED ON if object is within 10 cm
+  if (distance <= 10) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+
+  delay(200);
+}
+```
 
 ## Output:
- 
+### Hardware
+<img width="219" height="479" alt="image" src="https://github.com/user-attachments/assets/b2c9f0e3-f78e-4965-b730-8ec8fccea4cf" />
+
+
+### Software
+<img width="1473" height="760" alt="Screenshot 2026-09-06 191809" src="https://github.com/user-attachments/assets/ebbdaa56-bbed-4cb8-a65b-6ff889e5639d" />
 
 
 ## Result
-
-
-Result:
 The simulation successfully measured the distance between the ultrasonic sensor  HC-SR04 and the object. The real-time distance values were accurately displayed on the serial monitor in centimeters.
